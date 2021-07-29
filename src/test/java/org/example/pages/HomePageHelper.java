@@ -14,11 +14,15 @@ public class HomePageHelper extends PageBase{
     }
 
     public boolean isCorrectPage() {
+        log4j.startMethod("HomePageHelper() - isCorrectPage");
+//        log4j.endMethod("HomePageHelper() - isCorrectPage"); // no use: nothing in between
         return loginIcon.getText().equals("Log in");
 
     }
     public void waitUntilBeforeLoginPageIsLoaded(){
+        log4j.startMethod("HomePageHelper() - waitUntilBeforeLoginPageIsLoaded()");
         waitUntilElementIsClickable(loginIcon, 30);
+        log4j.endMethod("HomePageHelper() - waitUntilBeforeLoginPageIsLoaded()");
     }
 
 

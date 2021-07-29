@@ -1,5 +1,6 @@
 package org.example.tests;
 
+import org.example.util.DataProviders;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -20,6 +21,7 @@ public class CurrentBoardTest extends TestBase {
         boardsPage = PageFactory.initElements(driver, BoardsPageHelper.class);
         qa9Board = new CurrentBoardHelper(driver, "QA9");
 
+        log4j.startMethod("qa9Board - initTest()");
         loginPage
                 .openPage()
                 .waitUntilLoginPageIsLoaded()
@@ -30,12 +32,27 @@ public class CurrentBoardTest extends TestBase {
         qa9Board
                 .openPage()
                 .waitUntilCurrentBoardIsLoaded();
+        log4j.endMethod("qa9Board - initTest()");
     }
 
     @Test
     public void addNewListTest() {
+        log4j.startTestCase("addNewListTest");
+        log4j.info("initial quantity of lists in QA9 board");
         int numberOfListsBefore = qa9Board.getListSize();
+        log4j.info("create new list");
         qa9Board.createNewList("New List");
+        log4j.info("final quantity of lists in QA9 board");
+        int numberOfListsAfter = qa9Board.getListSize();
+        log4j.info("Assert: one more list added");
+        Assert.assertEquals(numberOfListsAfter, numberOfListsBefore + 1);
+        log4j.endTestCase("addNewListTest");
+    }
+
+    @Test(dataProviderClass = DataProviders.class,dataProvider = "createNewList")
+    public void addNewListTestParam(String nameList) {
+        int numberOfListsBefore = qa9Board.getListSize();
+        qa9Board.createNewList(nameList);
         int numberOfListsAfter = qa9Board.getListSize();
         Assert.assertEquals(numberOfListsAfter, numberOfListsBefore + 1);
     }

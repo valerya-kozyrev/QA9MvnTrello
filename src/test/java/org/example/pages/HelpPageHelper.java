@@ -11,6 +11,8 @@ public class HelpPageHelper extends PageBase{
     WebElement goToYourBoardsButton;
     @FindBy(xpath = "//span[contains(text(),'Help')]")
     WebElement openHelpPageButton;
+    @FindBy (xpath = "//h1")
+    WebElement header;
 
 
     public HelpPageHelper(WebDriver driver){
@@ -23,24 +25,31 @@ public class HelpPageHelper extends PageBase{
     }
 
     public void waitUntilPageIsLoaded(){
-//        waitUntilElementIsClickable(goToYourBoardsButton, 10);
-        waitUntilElementIsClickable(driver.findElement(By.xpath("//span[contains(text(),'All systems operational')]")),10);
+        waitUntilElementIsClickable(goToYourBoardsButton, 10);
+//        waitUntilElementIsClickable(driver.findElement(By.xpath("//span[contains(text(),'All systems operational')]")),10);
     }
 
     public void clickOnGoToYourBoardsButton(){
         goToYourBoardsButton.click();
     }
 
-    public void helpPageIsActive() throws InterruptedException {
+    public void helpPageIsActive() {
         String firstWindowHandle = driver.getWindowHandle();
-        openHelpPage();
-        Thread.sleep(3000);
-        String secondWindowHandle = "";
-        for(String handle: driver.getWindowHandles()){
-            if(!handle.equals(firstWindowHandle)) secondWindowHandle=handle;
-        }
+        waitUntilWindowsToBe(2,15);
+        String secondWindowHandle = getAnotherHandle(firstWindowHandle);
         driver.switchTo().window(secondWindowHandle);
-//        helpPage.waitUntilPageIsLoaded();
+        waitUntilElementIsClickable(goToYourBoardsButton,20);
     }
 
+    public String getHeaderText(){
+        return header.getText();
+    }
+
+
+    public void closeHelpPage() {
+        String currentWindow = driver.getWindowHandle();
+        String anotherWindow = this.getAnotherHandle(currentWindow);
+        this.closeCurrentWindow();
+        driver.switchTo().window(anotherWindow);
+    }
 }

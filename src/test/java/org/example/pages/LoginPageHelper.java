@@ -26,13 +26,19 @@ public class LoginPageHelper extends PageBase {
     }
 
     public LoginPageHelper openPage() {
+        log4j.startMethod("LoginPageHelper() - openPage()");
+        log4j.info("wait until loginIcon is clickable & click on it");
         waitUntilElementIsClickable(loginIcon, 30);
         loginIcon.click();
+
         return this;
     }
 
     public LoginPageHelper waitUntilLoginPageIsLoaded(){
+        log4j.startMethod("LoginPageHelper() - waitUntilLoginPageIsLoaded()");
+        log4j.info("wait until 'login' button is clickable");
         waitUntilElementIsClickable(loginButton, 10);
+        log4j.endMethod("LoginPageHelper() - waitUntilLoginPageIsLoaded()");
         return this;
     }
 
@@ -80,7 +86,11 @@ public class LoginPageHelper extends PageBase {
     }
 
     public String getErrorMessage(){
+        log4j.startMethod("LoginPageHelper - getErrorMessage()");
+        log4j.info("wait for the error message to be visible");
         waitUntilElementIsVisible(errorMessage, 10);
+        log4j.endMethod("LoginPageHelper - getErrorMessage()");
+        log4j.info("return error message");
         return errorMessage.getText();
     }
 
