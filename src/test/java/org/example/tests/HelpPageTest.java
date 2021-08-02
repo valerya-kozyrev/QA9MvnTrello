@@ -22,7 +22,7 @@ public class HelpPageTest extends TestBase {
         menuPage = PageFactory.initElements(driver, MenuPageHelper.class);
         helpPage = PageFactory.initElements(driver, HelpPageHelper.class);
 
-        homePage.waitUntilBeforeLoginPageIsLoaded();
+        log4j.startMethod("HelpPageTest - initTest()");
         loginPage
                 .openPage()
                 .waitUntilLoginPageIsLoaded()
@@ -35,28 +35,37 @@ public class HelpPageTest extends TestBase {
                 .waitUntilCurrentBoardIsLoaded();
         menuPage
                 .openMenuPage()
-                .waitUntilPageIsLoaded();
-        menuPage.openHelpWindow();
-        helpPage.helpPageIsActive();
+                .waitUntilMenuPageIsLoaded();
+        menuPage
+                .openHelpWindow();
+        helpPage
+                .helpPageIsActive();
+        log4j.endMethod("HelpPageTest - initTest()");
     }
 
-        @Test
+    @Test
     public void helpWindowVerification(){
+        log4j.startTestCase("helpWindowVerification");
         Assert.assertEquals(helpPage.getHeaderText(), "Get help with Trello");
+        log4j.endTestCase("helpWindowVerification");
     }
 
     @Test
     public void openHelpPageInNewWindow() {
+        log4j.startTestCase("openHelpPageInNewWindow");
         helpPage.closeHelpPage();
         qa9Board.waitUntilCurrentBoardIsLoaded();
         Assert.assertTrue(qa9Board.isCorrectPage());
+        log4j.endTestCase("openHelpPageInNewWindow");
     }
 
     @Test
     public void openHelpPageAndGoToYourBoards() {
+        log4j.startTestCase("openHelpPageAndGoToYourBoards");
         Assert.assertTrue(driver.findElement(By.xpath("//span[contains(text(),'Go to your boards')]")).isDisplayed());
         helpPage.clickOnGoToYourBoardsButton();
         boardsPage.waitUntilBoardPageIsLoaded();
-        Assert.assertTrue(driver.findElement(By.xpath("//a[@class = 'board-tile'][.//div[@title='QA9']]")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//button[@data-test-id='header-boards-menu-button']/span[2]")).isDisplayed()); // "//a[@class = 'board-tile'][.//div[@title='QA9']]"
+        log4j.endTestCase("openHelpPageAndGoToYourBoards");
     }
 }

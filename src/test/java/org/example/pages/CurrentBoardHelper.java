@@ -40,11 +40,13 @@ public class CurrentBoardHelper extends PageBase {
     @FindBy(css=".js-submit")
     WebElement createCopiedListButton;
     @FindBy(className="js-close-list")
-    WebElement archieveThisListButton;
+    WebElement archiveThisListButton;
     @FindBy(css=".list-header-name")
     List<WebElement> listName;
     @FindBy (css = ".js-board-editing-target")
     WebElement boardNameButton;
+//    @FindBy(css = ".js-open-header-member-menu")
+//    WebElement openMenuPage;
 
     String boardName;
 
@@ -73,34 +75,32 @@ public class CurrentBoardHelper extends PageBase {
         log4j.startMethod("CurrentBoardHelper() - waitUntilCurrentBoardIsLoaded()");
         log4j.info("wait until 'AnotherList' element is clickable");
         waitUntilElementIsClickable(addAnotherListElement, 10);
-        log4j.info("if there's elemnt 'Add another list'");
+        log4j.info("if there's element 'Add another list'");
         if (addAnotherListElement.getText().equals("Add another list")) {
-            log4j.startMethod("CurrentBoardHelper() - waitUntilAllElementsAreVisible()");
             log4j.info("wait until all the present lists are visible");
             waitUntilAllElementsAreVisible(listOfLists, 5);
-            log4j.startMethod("CurrentBoardHelper() - waitUntilAllElementsAreVisible()");
         }
         log4j.endMethod("CurrentBoardHelper() - waitUntilCurrentBoardIsLoaded()");
     }
 
     public int getListSize(){
         log4j.startMethod("CurrentPageHelper() - getListSize()");
+        log4j.endMethod("CurrentPageHelper() - getListSize()");
         return listOfLists.size();
     }
 
     public int getCardSize(){
         log4j.startMethod("CurrentPageHelper() - getCardSize()");
+        log4j.endMethod("CurrentPageHelper() - getCardSize()");
         return listOfCards.size();
     }
 
     public int getNumberOfListsBefore(String s) {
         log4j.startMethod("CurrentPageHelper() - getNumberOfListsBefore()");
-        log4j.info("intialize variable that shows quantity of lists in QA9 board");
+        log4j.info("initialize variable that shows quantity of lists in QA9 board");
         int numberOfListsBefore = getListSize();
         if (numberOfListsBefore == 0) {
-            log4j.startMethod("CurrentPageHelper() - createNewList()");
             createNewList(s);
-            log4j.endMethod("CurrentPageHelper() - createNewList()");
             log4j.info("add 1 more list to the quantity of lists in QA9 board");
             numberOfListsBefore++;
         }
@@ -111,17 +111,13 @@ public class CurrentBoardHelper extends PageBase {
 //  create new list
     public void createNewList(String s) {
         log4j.startMethod("CurrentPageHelper() - createNewList()");
-        log4j.info("intialize variable that shows quantity of lists in QA9 board");
+        log4j.info("initialize variable that shows quantity of lists in QA9 board");
         int beginListsQuantity = this.getListSize();
-//        log4j.info("click on button to add another list");
         openAddList();
-//        log4j.info("enter list's name");
         enterListName(s);
-//        log4j.info("click on 'Add' button to add list");
         clickAddListButton();
         log4j.info("wait until the lists changes to +1");
         waitUntilElementsBecome(By.cssSelector(".js-list-content"),beginListsQuantity+1,10);
-//        log4j.info("cancel adding another list");
         closeAnotherAddList();
         log4j.endMethod("CurrentPageHelper() - createNewList()");
     }
@@ -158,12 +154,12 @@ public class CurrentBoardHelper extends PageBase {
 //  create new card
     public void createNewCard() {
         log4j.startMethod("CurrentPageHelper() - createNewCard()");
-        log4j.info("intialize variable that shows quantity of cards in lists in QA9 board");
+        log4j.info("initialize variable that shows quantity of cards in lists in QA9 board");
         int beginCards = this.getCardSize();
         addNewCard();
         enterCardName("card tile");
         clickAddCardButton();
-        log4j.info("Cwait until the cards changes to +1");
+        log4j.info("wait until the cards changes to +1");
         waitUntilElementsBecome(By.cssSelector(".list-card-title"),beginCards+1,10);
         cancelAnotherCard();
         log4j.endMethod("CurrentPageHelper() - createNewCard()");
@@ -201,13 +197,13 @@ public class CurrentBoardHelper extends PageBase {
 //  copy
     public void copyList(String s) {
         log4j.startMethod("CurrentPageHelper() - createNewList()");
-        log4j.info("intialize variable that shows quantity of lists in QA9 board");
+        log4j.info("initialize variable that shows quantity of lists in QA9 board");
         int beginListsQuantity = this.getListSize();
         clickOnExtraMenuButton();
         clickOnCopyList();
         enterCopiedListName("Changed");
         clickOnCreateList();
-        log4j.info("Cwait until the lists changes to +1");
+        log4j.info("wait until the lists changes to +1");
         waitUntilElementsBecome(By.cssSelector(".js-list-content"),beginListsQuantity+1,10);
         log4j.endMethod("CurrentPageHelper() - cancelAnotherCard()");
     }
@@ -246,20 +242,20 @@ public class CurrentBoardHelper extends PageBase {
 //  delete
     public void archiveList() {
         log4j.startMethod("CurrentPageHelper() - archiveList()");
-        log4j.info("intialize variable that shows quantity of lists in QA9 board");
+        log4j.info("initialize variable that shows quantity of lists in QA9 board");
         int beginListsQuantity = this.getListSize();
         clickOnExtraMenuButton();
         clickOnArchiveList();
-        log4j.info("Cwait until the cards changes to -1");
+        log4j.info("wait until the cards changes to -1");
         waitUntilElementsBecome(By.cssSelector(".js-list-content"),beginListsQuantity-1,10);
         log4j.endMethod("CurrentPageHelper() - archiveList()");
     }
 
     public void clickOnArchiveList() {
         log4j.startMethod("CurrentPageHelper() - clickOnArchiveList()");
-        log4j.info("wait until 'Archibe this list' is clickable and click it");
-        waitUntilElementIsClickable(archieveThisListButton, 10);
-        archieveThisListButton.click();
+        log4j.info("wait until 'Archive this list' is clickable and click it");
+        waitUntilElementIsClickable(archiveThisListButton, 20);
+        archiveThisListButton.click();
         log4j.endMethod("CurrentPageHelper() - clickOnArchiveList()");
     }
 
@@ -269,11 +265,11 @@ public class CurrentBoardHelper extends PageBase {
 
     public void archiveNameList(int number) {
         log4j.startMethod("CurrentPageHelper() - archiveNameList()");
-        log4j.info("intialize variable that shows quantity of lists in QA9 board");
+        log4j.info("initialize variable that shows quantity of lists in QA9 board");
         int beginLists = this.getListSize();
         clickOnExtraMenuButtonAccordingName(number);
         clickOnArchiveList();
-        log4j.info("Cwait until the cards changes to -1");
+        log4j.info("wait until the cards changes to -1");
         waitUntilElementsBecome(By.cssSelector(".js-list-content"),beginLists-1,5);
         log4j.endMethod("CurrentPageHelper() - archiveNameList()");
     }
@@ -288,6 +284,7 @@ public class CurrentBoardHelper extends PageBase {
     }
 
     public int getNumberOfElementWithName(String nameList) { //if there's no list with this name we'll get -1
+        log4j.startMethod("CurrentPageHelper() - getNumberOfElementWithName()");
         int number = -1;
         int counter = 0;
         for(WebElement element: listName){
@@ -296,6 +293,7 @@ public class CurrentBoardHelper extends PageBase {
             }
             counter++;
         }
+        log4j.endMethod("CurrentPageHelper() - getNumberOfElementWithName()");
         return number;
     }
 
@@ -304,35 +302,55 @@ public class CurrentBoardHelper extends PageBase {
 
     public By getLocatorListName() {
         log4j.startMethod("CurrentPageHelper() - getLocatorListName()");
+        log4j.endMethod("CurrentPageHelper() - getLocatorListName()");
         return By.xpath("//*[@class='list js-list-content'][.//*[contains(.,'"+ thisListName +"')]]");
     }
 
     public void archiveNameList1(String s) {
+        log4j.startMethod("CurrentPageHelper() - archiveNameList1()");
         List<WebElement> nameList = driver.findElements(getLocatorListName());
+        log4j.info("initialize variable that shows quantity of specific lists in QA9 board");
         int beginLists = this.getNameListSize();
         clickOnExtraMenuButtonAccordingName1(s);
         clickOnArchiveList();
+        log4j.info("wait until the cards changes to -1");
         waitUntilElementsBecome(nameList,beginLists-1,5);
+        log4j.endMethod("CurrentPageHelper() - archiveNameList1()");
     }
 
     public int getNameListSize(){
+        log4j.startMethod("CurrentPageHelper() - getNameListSize()");
         List<WebElement> nameList = driver.findElements(getLocatorListName());
+        log4j.endMethod("CurrentPageHelper() - getNameListSize()");
         return nameList.size();
     }
 
     public void clickOnExtraMenuButtonAccordingName1(String s) {
+        log4j.startMethod("CurrentPageHelper() - clickOnExtraMenuButtonAccordingName1()");
         WebElement otherList = driver.findElement(getLocatorListName());
         waitUntilElementIsClickable(listMenuButton,5);
         otherList.findElement(By.cssSelector(".list-header-extras-menu")).click();
+        log4j.endMethod("CurrentPageHelper() - clickOnExtraMenuButtonAccordingName1()");
     }
 
     public boolean isCorrectPage() {
+        log4j.startMethod("CurrentPageHelper() - isCorrectPage()");
+        log4j.endMethod("CurrentPageHelper() - isCorrectPage()");
         return boardNameButton.getText().equals(boardName);
     }
 
     public String getNameBoard() {
+        log4j.startMethod("CurrentPageHelper() - getNameBoard()");
+        log4j.endMethod("CurrentPageHelper() - getNameBoard()");
         return boardName;
     }
+
+
+//    public void openMenuPage(){
+//        log4j.startMethod("CurrentPageHelper() - openMenuPage()");
+//        openMenuPage.click();
+//        log4j.endMethod("CurrentPageHelper() - openMenuPage()");
+//    }
 
 //    public int getNumberOfListsBefore1(String s) {
 //        int numberOfListsBefore = getListSize();

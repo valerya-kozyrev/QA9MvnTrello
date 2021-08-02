@@ -13,17 +13,24 @@ public class HomePageHelper extends PageBase{
         this.driver = driver;
     }
 
+    public void waitUntilHomePageIsLoaded(){
+        log4j.startMethod("HomePageHelper() - waitUntilHomePageIsLoaded()");
+        waitUntilElementIsClickable(loginIcon, 5);
+        log4j.endMethod("HomePageHelper() - waitUntilHomePageIsLoaded()");
+    }
+
     public boolean isCorrectPage() {
         log4j.startMethod("HomePageHelper() - isCorrectPage");
-//        log4j.endMethod("HomePageHelper() - isCorrectPage"); // no use: nothing in between
+        log4j.endMethod("HomePageHelper() - isCorrectPage"); // no use: nothing in between
         return loginIcon.getText().equals("Log in");
+    }
 
-    }
-    public void waitUntilBeforeLoginPageIsLoaded(){
-        log4j.startMethod("HomePageHelper() - waitUntilBeforeLoginPageIsLoaded()");
-        waitUntilElementIsClickable(loginIcon, 30);
-        log4j.endMethod("HomePageHelper() - waitUntilBeforeLoginPageIsLoaded()");
-    }
+
+//    public void openLoginPage(){
+//        log4j.startMethod("HomePageHelper() - openLoginPage()");
+//        loginIcon.click();
+//        log4j.endMethod("HomePageHelper() - openLoginPage()");
+//    }
 
 
 }

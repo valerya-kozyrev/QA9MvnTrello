@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Tests" verbose="5">
-  <test name="Test1">
-    <classes>
-      <class name="org.example.SampleTest"/>
-    </classes>
-  </test>  
+<!--  <test name="Smoke Testing" enabled = "false">-->
+<!--    <groups>-->
+<!--      <run>-->
+<!--        <include name = "smoke"></include>-->
+<!--      </run>-->
+<!--    </groups>-->
+<!--    <classes>-->
+<!--      <class name="org.example.tests.HomePageTests"/>-->
+<!--      <class name="org.example.tests.ActivityPageTest"/>-->
+<!--      <class name="org.example.tests.LoginTests"/>-->
+<!--    </classes>-->
+<!--  </test>-->
+<!--  <test name="Smoke Testing without Regression" enabled = "true">-->
+<!--    <groups>-->
+<!--      <run>-->
+<!--        <include name = "smoke"></include>-->
+<!--        <exclude name = "regression"></exclude>-->
+<!--      </run>-->
+<!--    </groups>-->
+<!--    <classes>-->
+<!--      <class name="org.example.tests.HomePageTests"/>-->
+<!--      <class name="org.example.tests.ActivityPageTest"/>-->
+<!--      <class name="org.example.tests.LoginTests"/>-->
+<!--    </classes>-->
+<!--  </test>-->
 </suite>

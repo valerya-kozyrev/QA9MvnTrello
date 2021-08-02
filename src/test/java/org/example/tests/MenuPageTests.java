@@ -19,7 +19,7 @@ public class MenuPageTests extends TestBase {
         qa9Board = new CurrentBoardHelper(driver, "QA9");
         menuPage = PageFactory.initElements(driver, MenuPageHelper.class);
 
-        homePage.waitUntilBeforeLoginPageIsLoaded();
+        log4j.startMethod("MenuPageTest - initTest()");
         loginPage
                 .openPage()
                 .waitUntilLoginPageIsLoaded()
@@ -27,16 +27,19 @@ public class MenuPageTests extends TestBase {
         boardsPage
                 .waitUntilBoardPageIsLoaded()
                 .openBoardsMenu();
-        qa9Board.openPage()
+        qa9Board
+                .openPage()
                 .waitUntilCurrentBoardIsLoaded();
-
         menuPage
                 .openMenuPage()
-                .waitUntilPageIsLoaded();
+                .waitUntilMenuPageIsLoaded();
+        log4j.endMethod("MenuPageTest - initTest()");
     }
 
     @Test
     public void profileVisibilityMenuExistsTest() {
+        log4j.startTestCase("profileVisibilityMenuExistsTest");
         Assert.assertEquals(menuPage.getProfileVisibilityMenuName(), "Profile and visibility");
+        log4j.endTestCase("profileVisibilityMenuExistsTest");
     }
 }

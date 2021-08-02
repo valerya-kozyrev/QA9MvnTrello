@@ -22,7 +22,7 @@ public class ActivityPageTest extends TestBase{
         menuPage = PageFactory.initElements(driver, MenuPageHelper.class);
         activityPage = PageFactory.initElements(driver,ActivityPageHelper.class);
 
-        homePage.waitUntilBeforeLoginPageIsLoaded();
+        log4j.startMethod("ActivityPageTest - initTest()");
         loginPage
                 .openPage()
                 .waitUntilLoginPageIsLoaded()
@@ -33,30 +33,37 @@ public class ActivityPageTest extends TestBase{
         qa9Board
                 .openPage()
                 .waitUntilCurrentBoardIsLoaded();
-
         menuPage
                 .openMenuPage()
-                .waitUntilPageIsLoaded();
+                .waitUntilMenuPageIsLoaded();
+        activityPage
+                .openPage()
+                .waitUntilActivityPageIsLoaded();
+        log4j.endMethod("ActivityPageTest - initTest()");
     }
 
     @Test
     public void verifyAddNewListTest() {
-        menuPage.clickActivityButton();
-        activityPage.waitUntilPageIsLoaded();
+        log4j.startTestCase("verifyAddNewListTest");
+        log4j.info("initial quantity of records in activity list");
         int sizeActivityBefore = activityPage.getActivityListSize();
+        log4j.info("return to menu page");
         activityPage.returnToPreviousPage();
-        qa9Board.waitUntilCurrentBoardIsLoaded();
+        menuPage.waitUntilMenuPageIsLoaded();
+//        qa9Board.waitUntilCurrentBoardIsLoaded();
+        log4j.info("create new list");
         qa9Board.createNewList("Activity List");
         menuPage.openMenuPage();
-        menuPage.waitUntilPageIsLoaded();
-        menuPage.clickActivityButton();
-        activityPage.waitUntilPageIsLoaded();
+        menuPage.openActivityPage();
+        activityPage.waitUntilActivityPageIsLoaded();
         activityPage.findLastActivityText();
         int sizeActivityListAfter = activityPage.getActivityListSize();
         Assert.assertEquals(sizeActivityListAfter, sizeActivityBefore + 1);
-        Assert.assertEquals(activityPage.findLastActivityText(),
-                driver.findElement(By.xpath("//div[@class='phenom mod-attachment-type'][1]")).getText(),
-                "Wrong activity");
+        Assert.assertTrue(activityPage.lastActivityContains("Activity List"));
+//        Assert.assertEquals(activityPage.findLastActivityText(),
+//                driver.findElement(By.xpath("//div[@class='phenom mod-attachment-type'][1]")).getText(),
+//                "Wrong activity");
+        log4j.endTestCase("verifyAddNewListTest");
     }
 
 }
