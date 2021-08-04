@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Tests" verbose="5">
-<!--  <test name="Smoke Testing" enabled = "false">-->
+      <test name="TestsAll">
+    <!--    <groups>-->
+    <!--      <run>-->
+    <!--        <include name = "smoke"></include>-->
+<!--          </run>-->
+<!--        </groups>-->
+        <classes>
+            <class name="org.example.tests.HomePageTests"/>
+            <class name="org.example.tests.LoginTests"/>
+            <class name="org.example.tests.CurrentBoardTest"/>
+          <class name="org.example.tests.MenuPageTests"/>
+          <class name="org.example.tests.ActivityPageTest"/>
+          <class name="org.example.tests.HelpPageTest"/>
+    </classes>
+    </test>
+    <!--  <test name="Smoke Testing" enabled = "false">-->
 <!--    <groups>-->
 <!--      <run>-->
 <!--        <include name = "smoke"></include>-->
